@@ -100,14 +100,5 @@ RSpec.describe Invoice do
         expect(actual).to eq(32000)
       end
     end
-
-    describe '.enum_integer' do
-      it 'returns the integer associated with that status' do
-
-        expect(@invoice_1.status).to eq('completed')
-        expect(@invoice_1.enum_integer).to eq(1)
-
-      end
-    end
   end
 end

@@ -1,16 +1,5 @@
 require 'rails_helper'
 
-    # As an admin
-    # When I visit an admin invoice show page
-    # I see the invoice status is a select field
-    # And I see that the invoice's current status is selected
-    # When I click this select field,
-    # Then I can select a new status for the Invoice,
-    # And next to the select field I see a button to "Update Invoice Status"
-    # When I click this button
-    # I am taken back to the admin invoice show page
-    # And I see that my Invoice's status has now been updated
-
 RSpec.describe 'Admin Invoice Edit' do
   before :each do
     allow(GithubService).to receive(:contributors_info).and_return([
@@ -55,15 +44,4 @@ RSpec.describe 'Admin Invoice Edit' do
 
     expect(page).to have_content("Invoice Successfully Updated")
   end
-
-  # xit 'shows an error if I try to submit an empty name field' do
-  #   fill_in 'Name', with: ''
-  #   click_button 'Update Merchant'
-  #
-  #   expect(page).to have_current_path("/admin/merchants/#{@signs.id}/edit")
-  #
-  #   within(".alert") do
-  #     expect(page).to have_content("Error: Name can't be blank")
-  #   end
-  # end
 end

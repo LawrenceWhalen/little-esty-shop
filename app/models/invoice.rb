@@ -15,6 +15,7 @@ class Invoice < ApplicationRecord
     .select('invoices.*')
     .group('invoices.id')
     .order('invoices.created_at asc')
+    .distinct
   end
 
   def item_sale_price
@@ -31,10 +32,5 @@ class Invoice < ApplicationRecord
     items
     .where(merchant_id: merchant_id)
     .sum('invoice_items.unit_price * invoice_items.quantity')
-  end
-
-  def enum_integer
-    enum_convert = Invoice.statuses
-    enum_convert[self.status]
   end
 end

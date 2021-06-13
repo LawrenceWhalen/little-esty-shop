@@ -9,7 +9,7 @@
 --------------------------------------
 <h4>Update status:</h4>
 <%= form_with model: [:admin, @invoice], url: admin_invoice_path(@invoice.id), method: :patch, local: true do |f| %>
-  <%= f.select :status, [['in progress', 0], ['completed', 1], ['cancelled', 2]], selected: @invoice.enum_integer %>
+  <%= f.select :status, [['in progress', 0], ['completed', 1], ['cancelled', 2]], selected: invoice_enum_integer(@invoice) %>
   <%= f.submit 'Update' %>
 <% end %>
 
