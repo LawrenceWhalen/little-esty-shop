@@ -15,7 +15,6 @@ class Invoice < ApplicationRecord
     .select('invoices.*')
     .group('invoices.id')
     .order('invoices.created_at asc')
-    .distinct
   end
 
   def item_sale_price
