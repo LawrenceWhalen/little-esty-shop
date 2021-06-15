@@ -14,9 +14,10 @@ RSpec.describe 'The merchant item show page' do
     allow(GithubService).to receive(:repo_info).and_return({
         name: 'little-esty-shop'
     })
-    
+
     @merchant = Merchant.create!(name: "Little Shop of Horrors")
     @item_1 = @merchant.items.create!(name: 'Audrey II', description: 'Large, man-eating plant', unit_price: '100000000')
+    @item_test = FactoryBot.create(:item)
 
     visit "/merchants/#{@merchant.id}/items/#{@item_1.id}"
   end
@@ -27,6 +28,7 @@ RSpec.describe 'The merchant item show page' do
     expect(page).to have_content 'Audrey II'
     expect(page).to have_content 'Large, man-eating plant'
     expect(page).to have_content '$1,000,000.00'
+
   end
 
   it 'has a link to update an item' do
@@ -34,5 +36,10 @@ RSpec.describe 'The merchant item show page' do
     click_on 'Edit item details'
 
     expect(current_path).to eq "/merchants/#{@merchant.id}/items/#{@item_1.id}/edit"
+  end
+
+  it 'can test factorybot items' do
+    visit "/merchants/#{@merchant.id}/items/#{@item_test.id}"
+    expect(page).to have_content("#{@item_test.unit_price / 100}")
   end
 end

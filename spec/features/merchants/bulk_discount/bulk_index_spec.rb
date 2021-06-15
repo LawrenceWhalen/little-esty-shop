@@ -15,6 +15,11 @@ RSpec.describe 'bulk discount index' do
       allow(GithubService).to receive(:repo_info).and_return({
           name: 'little-esty-shop'
       })
+      allow(NagerService).to receive(:upcoming_holidays).and_return([
+        {name: 'Labor Day', date: '2021-07-05'},
+        {name: 'Columbus Day', date: '2021-09-06'},
+        {name: 'Veterans day', date: '2021-10-11'},
+        {name: 'Coding Day', date: '2021-12-12'}])
 
       @merchant_1 = Merchant.create!(name: "Ralph's Monkey Hut")
       @bulk_discount_1 = @merchant_1.bulk_discounts.create!(percentage: 0.9, quantity_threshold: 10)
@@ -57,6 +62,20 @@ RSpec.describe 'bulk discount index' do
       click_link("Discount #{@bulk_discount_1.id}:")
 
       expect(page).to have_current_path("/merchants/#{@merchant_1.id}/bulk_discounts/#{@bulk_discount_1.id}")
+    end
+
+    it 'has a section containing the next three holidays' do
+
+      visit("/merchants/#{@merchant_1.id}/bulk_discounts")
+
+      expect(page).to have_content('Labor Day')
+      expect(page).to have_content('2021-07-05')
+      expect(page).to have_content('First Peoples Day')
+      expect(page).to have_content('2021-09-06')
+      expect(page).to have_content('Veterans day')
+      expect(page).to have_content('2021-10-11')
+      expect(page).to_not have_content('Coding Day')
+      expect(page).to_not have_content('2021-12-12')
     end
   end
 end
