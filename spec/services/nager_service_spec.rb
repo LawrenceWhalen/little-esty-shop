@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NagerService do
   describe 'class methods' do
     describe '#upcoming_holidays' do
-      xit 'returns a hash of upcoming holidays' do
+      xit 'returns an array of upcoming holidays' do
         actual = NagerService.upcoming_holidays
 
         expect(actual.class).to eq(Array)

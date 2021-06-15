@@ -1,0 +1,11 @@
+<%= render partial: './partials/merchant_nav' %>
+
+<h1><%= "Edit #{@merchant.name} Discount: #{@bulk_discount.id}" %></h1>
+
+<%= form_with model: [@merchant, @bulk_discount], local: true do |f| %>
+  <%= f.label :quantity_threshold  %>
+  <%= f.number_field :quantity_threshold,  in: 1..99999, step: 1, required: true, value: (@bulk_discount.quantity_threshold.to_i) %>
+  <%= f.label :percentage %>
+  <%= f.number_field :percentage, in: 1..99, step: 1, required: true, value: ((@bulk_discount.percentage.to_f*100).to_i)  %>
+  <%= f.submit 'Update Discount' %>
+<% end %>

@@ -1,0 +1,7 @@
+<h1><%= "#{@merchant.name} Discout: ##{@bulk_discount.id}" %></h1>
+<div id="bulk">
+<h2><%= "Discount Percentage: #{(@bulk_discount.percentage * 100).to_i}%" %></h2>
+<h2><%= "Quantity Threshold: #{@bulk_discount.quantity_threshold} items" %></h2>
+<br>
+<%= button_to 'Edit Discount', edit_merchant_bulk_discount_path(@merchant.id, @bulk_discount.id), method: :get %>
+</div>
