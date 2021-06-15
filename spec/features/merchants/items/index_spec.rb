@@ -57,7 +57,7 @@ RSpec.describe 'The merchant items index' do
 
   it 'links to each item show page' do
     within "section#enabled" do
-      click_on "#{@item_1.name}" 
+      click_on "#{@item_1.name}"
     end
 
     expect(current_path).to eq "/merchants/#{@merchant.id}/items/#{@item_1.id}"
@@ -72,7 +72,7 @@ RSpec.describe 'The merchant items index' do
       expect(page).to have_content @item_4.name
       expect(page).to have_button 'Disable'
       expect(page).to_not have_button 'Enable'
-      expect(page).to_not have_content @item_3.name 
+      expect(page).to_not have_content @item_3.name
     end
 
     within "section#disabled" do
@@ -138,7 +138,7 @@ RSpec.describe 'The merchant items index' do
   end
 
   it 'links to each merchant item show page from popular items' do
-    within "section#popular" do 
+    within "section#popular" do
       click_link "#{@item_1.name}"
     end
 
