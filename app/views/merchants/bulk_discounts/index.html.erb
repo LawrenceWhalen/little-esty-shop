@@ -4,9 +4,11 @@
   <p> <%= "#{holiday[:name]} #{holiday[:date]}" %> </p>
 <% end %>
 
+<%= button_to 'Create Discount', new_merchant_bulk_discount_path(@merchant.id), method: :get %>
+
 <ul>
   <% @bulk_discounts.each do |bulk_discount| %>
-    <li><%= link_to "Discount #{bulk_discount.id}:", merchant_bulk_discount_path(@merchant.id, bulk_discount.id)%>
+    <li id="<%= bulk_discount.id %>"><%= link_to "Discount #{bulk_discount.id}:", merchant_bulk_discount_path(@merchant.id, bulk_discount.id)%>
       <ul>
       <li><%= "Discount Percentage: #{(bulk_discount.percentage * 100).to_i}%" %></li>
       <li><%= "Quantity Threshold: #{bulk_discount.quantity_threshold} items" %></li>
