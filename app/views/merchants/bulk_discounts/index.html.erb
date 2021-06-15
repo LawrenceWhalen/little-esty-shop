@@ -1,4 +1,8 @@
 <h1><%= "#{@merchant.name} Bulk Indexes:" %></h1>
+<h2>Upcoming Holidays</h2>
+<% @holidays.each do |holiday| %>
+  <p> <%= "#{holiday[:name]} #{holiday[:date]}" %> </p>
+<% end %>
 
 <ul>
   <% @bulk_discounts.each do |bulk_discount| %>

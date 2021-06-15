@@ -5,6 +5,9 @@ class NagerHolidays
     holidays_third = immenent_holidays[0..2]
     if !holidays_third[0].keys.include?(:message)
       holidays_third[0..2].map do |holiday|
+        if holiday[:name] == 'Columbus Day'
+          holiday[:name] = 'First Peoples Day'
+        end
         {name: holiday[:name], date: holiday[:date]}
       end
     else

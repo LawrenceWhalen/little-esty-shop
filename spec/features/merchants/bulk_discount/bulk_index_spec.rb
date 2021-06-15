@@ -17,7 +17,7 @@ RSpec.describe 'bulk discount index' do
       })
       allow(NagerService).to receive(:upcoming_holidays).and_return([
         {name: 'Labor Day', date: '2021-07-05'},
-        {name: 'First Peoples Day', date: '2021-09-06'},
+        {name: 'Columbus Day', date: '2021-09-06'},
         {name: 'Veterans day', date: '2021-10-11'},
         {name: 'Coding Day', date: '2021-12-12'}])
 
@@ -63,20 +63,16 @@ RSpec.describe 'bulk discount index' do
 
       expect(page).to have_current_path("/merchants/#{@merchant_1.id}/bulk_discounts/#{@bulk_discount_1.id}")
     end
-  # When I visit the discounts index page
-  # I see a section with a header of "Upcoming Holidays"
-  # In this section the name and date of the next 3 upcoming US holidays are listed.
-  #
-  # Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
 
     it 'has a section containing the next three holidays' do
-      allow(NagerService).to receive(:upcoming_holidays).and_return({
-          name: 'little-esty-shop'
-      })
 
-      visit("/merchants/#{@merchant_1.id}/bulk_discounts/#{@bulk_discount_1.id}")
+      visit("/merchants/#{@merchant_1.id}/bulk_discounts")
 
       expect(page).to have_content('Labor Day')
+      expect(page).to have_content('2021-07-05')
+      expect(page).to have_content('First Peoples Day')
+      expect(page).to have_content('2021-09-06')
+      expect(page).to have_content('Veterans day')
       expect(page).to have_content('2021-10-11')
       expect(page).to_not have_content('Coding Day')
       expect(page).to_not have_content('2021-12-12')
