@@ -27,23 +27,25 @@ RSpec.describe 'bulk discount create' do
     @bulk_discount_4 = @merchant_1.bulk_discounts.create!(percentage: 0.62, quantity_threshold: 50)
   end
 
-    # When I visit my bulk discounts index
-    # Then next to each bulk discount I see a link to delete it
-    # When I click this link
-    # Then I am redirected back to the bulk discounts index page
-    # And I no longer see the discount listed
-
-  describe 'creation proccess' do
-    describe 'merchant bulk discount index' do
+  describe 'deletion proccess' do
+    describe 'merchant bulk discount index delete' do
       it 'has a button to create a new bulk discount' do
         visit("/merchants/#{@merchant_1.id}/bulk_discounts")
-        save_and_open_page
 
         expect(page).to have_button('Delete Discount', count: 4)
+      end
+      it 'deletes the bulk discount when you delete the button' do
+        visit("/merchants/#{@merchant_1.id}/bulk_discounts")
 
-        click_button('Create Discount')
+        within("li#bl-#{@bulk_discount_1.id}") do
+          click_button 'Delete Discount'
+        end
 
-        expect(page).to have_current_path("/merchants/#{@merchant_1.id}/bulk_discounts/new")
+        expect(page).to have_button('Delete Discount', count: 3)
+        expect(page).to_not have_content('Percentage: 90%')
+        expect(page).to_not have_content('Threshold: 10 items')
+
+        expect(page).to have_current_path("/merchants/#{@merchant_1.id}/bulk_discounts")
       end
     end
   end
