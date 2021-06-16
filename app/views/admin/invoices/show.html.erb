@@ -26,3 +26,4 @@
   <% end %>
 </ol><br>
 <h2><%= "Total Revenue: #{number_to_currency(@invoice.total_revenue.to_f / 100)}" %></h2>
+<h2><%= "Discounted Revenue: #{number_to_currency(@invoice.discounted_revenue.to_f / 100)}" %></h2>
