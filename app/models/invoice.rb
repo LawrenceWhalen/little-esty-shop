@@ -27,6 +27,22 @@ class Invoice < ApplicationRecord
     .sum('invoice_items.unit_price * invoice_items.quantity')
   end
 
+  def discounted_revenue
+    tally = items
+    .select('invoice_items.*, items.merchant_id')
+    tally.sum do |invoice_item|
+      merch = invoice_item.merchant_id
+      quan = invoice_item.quantity
+      discount = BulkDiscount.find_max(merch, quan)
+      if discount == []
+        discount = 1
+      else
+        discount = 1.0 - discount[0].percentage
+      end
+      invoice_item.quantity * invoice_item.unit_price * discount
+    end
+  end
+
   def total_revenue_for_merchant(merchant_id)
     items
     .where(merchant_id: merchant_id)
