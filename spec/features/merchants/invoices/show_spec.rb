@@ -42,10 +42,10 @@ RSpec.describe 'Merchant Invoices Show Page' do
       invoice_3 = customer_3.invoices.create!(status: 1, created_at: "2012-03-08 14:54:15 UTC")
       invoice_5 = customer_5.invoices.create!(status: 1, created_at: "2012-03-10 14:54:15 UTC")
       invoice_6 = customer_6.invoices.create!(status: 1, created_at: "2012-03-11 14:54:15 UTC")
-      invoice_item_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, status: 1, unit_price: 10000)
-      invoice_item_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_2.id, status: 1, unit_price: 5000)
-      invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_3.id, status: 1, unit_price: 1000)
-      invoice_item_4 = InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice_4.id, status: 1, unit_price: 200)
+      invoice_item_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, status: 1, unit_price: 10000, quantity: 10)
+      invoice_item_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_2.id, status: 1, unit_price: 5000, quantity: 10)
+      invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_3.id, status: 1, unit_price: 1000, quantity: 10)
+      invoice_item_4 = InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice_4.id, status: 1, unit_price: 200, quantity: 10)
 
       visit "/merchants/#{merchant.id}/invoices/#{invoice_1.id}"
 
@@ -104,7 +104,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
     it 'displays the total revenue generated from all of my items on the invoice' do
       merchant = Merchant.create!(name: 'Schroeder-Jerde')
       merchant_2 = Merchant.create!(name: 'James Bond')
-      
+
       customer_1 = Customer.create!(first_name: 'Sally', last_name: 'Shopper')
       customer_2 = Customer.create!(first_name: 'Du', last_name: 'North')
 
@@ -120,7 +120,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
       invoice_1 = customer_1.invoices.create!(status: 1, created_at: "2012-03-06 14:54:15 UTC")
       invoice_2 = customer_2.invoices.create!(status: 1, created_at: "2012-03-09 14:54:15 UTC")
-      
+
       # items for invoice 1
       invoice_item_1 = InvoiceItem.create!(quantity: 2, unit_price: 10000, item_id: item_1.id, invoice_id: invoice_1.id, status: 1) # $200
       invoice_item_2 = InvoiceItem.create!(quantity: 2, unit_price: 5000, item_id: item_2.id, invoice_id: invoice_1.id, status: 1) # $100
@@ -132,7 +132,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
       invoice_item_4 = InvoiceItem.create!(quantity: 2, unit_price: 200,item_id: item_4.id, invoice_id: invoice_2.id, status: 1) # should not be counted on invoice 1
 
       visit "/merchants/#{merchant.id}/invoices/#{invoice_1.id}"
-      
+
       expect(page).to have_content 'Total revenue: $320.00'
     end
 
@@ -146,12 +146,12 @@ RSpec.describe 'Merchant Invoices Show Page' do
       item_2 = merchant.items.create!(name: 'Silver Ring', description: 'Jewelery', unit_price: 5000)
 
       invoice_1 = customer_1.invoices.create!(status: 1, created_at: "2012-03-06 14:54:15 UTC")
-      
+
       invoice_item_1 = InvoiceItem.create!(quantity: 2, unit_price: 10000, item_id: item_1.id, invoice_id: invoice_1.id, status: 1)
       invoice_item_2 = InvoiceItem.create!(quantity: 2, unit_price: 5000, item_id: item_2.id, invoice_id: invoice_1.id, status: 1)
 
       visit "/merchants/#{merchant.id}/invoices/#{invoice_1.id}"
-      
+
       within "tr#ii-#{invoice_item_1.id}" do
         expect(page).to have_select('invoice_item[status]', selected: "Packaged")
 

@@ -18,6 +18,9 @@ require 'simplecov'
 SimpleCov.start do
   add_filter "spec/rails_helper.rb"
   add_filter "modules/dollarable.rb"
+  add_filter "spec/factories"
+  add_filter "spec/services"
+  add_filter "app/services"
 end
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

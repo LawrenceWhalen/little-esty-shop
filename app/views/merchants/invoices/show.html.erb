@@ -5,6 +5,8 @@
 <p> <%= "Status: #{@invoice.status}" %> </p>
 <p> <%= "Created On: #{@invoice.created_at.strftime('%A, %B %d, %Y')}" %> </p>
 <p><%= "Total revenue: #{ number_to_currency(@invoice.total_revenue_for_merchant(@merchant.id) / 100) }" %></p>
+<p><%= "Discounted revenue: #{ number_to_currency(@invoice.discount_revenue_for_merchant(@merchant.id) / 100) }" %></p>
+
 
 <h4> Customer: </h4>
 <p> <%= @customer.first_name %> <%= @customer.last_name %> </p>
@@ -21,7 +23,7 @@
         <td> <%= invoice_item.item_name %> </td>
         <td> <%= invoice_item.quantity %> </td>
         <td> <%= number_to_currency(invoice_item.unit_price / 100 ) %> </td>
-        <td> 
+        <td>
           <%= form_with model: [@merchant, invoice_item], local: true do |f| %>
             <%= f.select :status, [['Pending', 0], ['Packaged', 1], ['Shipped', 2]], selected: invoice_item.numeric_status %>
             <%= f.submit 'Update' %>
