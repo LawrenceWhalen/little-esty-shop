@@ -18,6 +18,7 @@
     <th> Quantity </th>
     <th> Unit Price </th>
     <th> Status </th>
+    <th>Discount Applied</th>
     <% @invoice_items.each do |invoice_item|  %>
       <tr id="ii-<%= invoice_item.id %>">
         <td> <%= invoice_item.item_name %> </td>
@@ -29,6 +30,13 @@
             <%= f.submit 'Update' %>
           <% end %>
         </td>
+        <% discount = BulkDiscount.find_max(@merchant.id, invoice_item.quantity) %>
+        <td><% if discount != [] %>
+              <%= link_to "Discount ##{discount[0].id}", merchant_bulk_discount_path(@merchant, discount[0]) %>
+            <% else %>
+              None
+            <% end %>
+          </td>
       </tr>
     <% end %>
   </table>

@@ -55,4 +55,16 @@ RSpec.describe 'bulk discount create' do
       expect(page).to have_content('$1,493.00')
     end
   end
+  describe 'bulk discount links' do
+    it 'has links to the applied discounts' do
+      visit "/merchants/#{@merchant.id}/invoices/#{@invoice_1.id}"
+
+      expect(page).to have_link("Discount ##{@bulk_discount_1.id}")
+      expect(page).to have_link("Discount ##{@bulk_discount_1.id}")
+
+      click_link("Discount ##{@bulk_discount_1.id}")
+
+      expect(page).to have_current_path("/merchants/#{@merchant.id}/bulk_discounts/#{@bulk_discount_1.id}")
+    end
+  end
 end
